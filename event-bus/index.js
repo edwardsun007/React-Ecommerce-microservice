@@ -8,8 +8,8 @@ app.use(bodyParser.json())
 app.post('/events', (req, res)=>{
     const event = req.body;
     // whenever there is event received, we will then make a series of events call to posts, comments
-    // axios.post('http://localhost:4000/events', event);
-    // axios.post('http://localhost:4001/events', event);
+    axios.post('http://localhost:4000/events', event);
+    axios.post('http://localhost:4001/events', event);
     // axios.post('http://localhost:4002/events', event);
     // this code has flaw, currently it is just assuming all the above call can succeed
 

@@ -42,6 +42,15 @@ app.post('/posts', async (req, res) => {
     res.status(201).send(posts[id])
 });
 
+// postCreate event listener:
+/**
+ * whenever event-bus send event over, this handler will be triggered
+ */
+app.post('/events',(req, res)=>{
+    console.log('Received event:', req.body)
+    res.send( {status: 'OK'})
+})
+
 app.listen(4000, ()=>{
     console.log('Listening on port 4000...');
 })

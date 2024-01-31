@@ -47,6 +47,15 @@ app.post('/posts/:id/comments', async (req, res)=>{
     res.status(201).send(comments);
 });
 
+// CommentCreate event listener:
+/**
+ * whenever event-bus send event over, this handler will be triggered
+ */
+app.post('/events',(req, res)=>{
+    console.log('Received event:', req.body)
+    res.send( {status: 'OK'})
+})
+
 // each microservice need to use unique port
 app.listen(4001, ()=>{
     console.log('Listening on port 4001...');
