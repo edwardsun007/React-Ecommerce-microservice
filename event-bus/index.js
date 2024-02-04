@@ -8,9 +8,9 @@ app.use(bodyParser.json())
 app.post('/events', (req, res)=>{
     const event = req.body;
     // whenever there is event received, we will then make a series of events call to posts, comments
-    axios.post('http://localhost:4000/events', event);
-    axios.post('http://localhost:4001/events', event);
-    // axios.post('http://localhost:4002/events', event);
+    axios.post('http://localhost:4000/events', event);  // Post service
+    axios.post('http://localhost:4001/events', event);  // Comment service
+    axios.post('http://localhost:4002/events', event);  // Query Service
     // this code has flaw, currently it is just assuming all the above call can succeed
 
     res.send( {status: 'OK'});
@@ -18,4 +18,4 @@ app.post('/events', (req, res)=>{
 
 app.listen(4005, ()=>{
     console.log('listening on 4005');
-})
+});
