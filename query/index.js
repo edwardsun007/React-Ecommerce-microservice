@@ -29,7 +29,8 @@ const posts = {};
 
 
 app.get('/posts', (req, res)=>{
-    app.send(posts);
+    console.log('query service sending posts now...');
+    res.send(posts);
 })
 
 // receive events from our event-bus

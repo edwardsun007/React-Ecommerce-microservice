@@ -11,7 +11,8 @@ function PostList() {
 
     const fetchPosts = async () => {
         try {
-            const response = await axios.get('http://localhost:4000/posts');
+            // with intro of query service, frontend need to fetch the list using query service only
+            const response = await axios.get('http://localhost:4002/posts'); 
             console.log(response.data);
             setPosts(response.data);
         }catch(error){
