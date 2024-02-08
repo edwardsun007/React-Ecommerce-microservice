@@ -1,7 +1,7 @@
 /*
 Comments microservice
 */
-const {Types} = require('../utils/eventType'); // common JS syntax of importing module using require
+const {EventTypes} = require('../utils/eventType'); // common JS syntax of importing module using require
 const {ModerationStatus} = require('../utils/commentModerationType');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -41,7 +41,7 @@ app.post('/posts/:id/comments', async (req, res)=>{
     // emit event to event-bus
     try {
         await axios.post('http://localhost:4005/events',{
-            type: Types.CommentCreate,
+            type: EventTypes.CommentCreate,
             data: {
                 id: commentId,
                 content,
@@ -60,9 +60,27 @@ app.post('/posts/:id/comments', async (req, res)=>{
 /**
  * whenever event-bus send event over, this handler will be triggered
  */
-app.post('/events',(req, res)=>{
+app.post('/events', async (req, res)=>{
     console.log('Received event:', req.body)
-    res.send( {status: 'OK'})
+    const {type, data} = req.body;
+    if(type === ModerationStatus.MODERATED){
+        const {id, postId, status, content} = data;
+        const comments = commentsByPostId[postId]; // look up the comments by postId
+        const comment = comments.find(comment=>{
+            return comment.id === id; // match with moderated event passed comment id
+        });
+        comment.status = status; // update status
+        // now we can tell event-bus that comment has been updated
+        await axios.post('http://localhost:4005',{
+            type: EventTypes.CommentUpdated,
+            id,
+            postId,
+            status,
+            content
+        });
+    }
+
+    res.send({})
 })
 
 // each microservice need to use unique port
