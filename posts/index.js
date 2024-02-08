@@ -2,7 +2,7 @@
 Post microservice
 standard express app
 */
-const {Types} = require('../utils/eventType'); // common JS syntax of importing module using require
+const {EventTypes} = require('../utils/eventType'); // common JS syntax of importing module using require
 const express = require('express');
 const bodyParser = require('body-parser');
 const  { randomBytes } = require('crypto');
@@ -32,7 +32,7 @@ app.post('/posts', async (req, res) => {
     // emit event to event-bus
     try {
         await axios.post('http://localhost:4005/events', {
-            type: Types.PostCreate,
+            type: EventTypes.PostCreate,
             data: {
                 id,
                 title
