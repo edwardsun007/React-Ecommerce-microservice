@@ -66,6 +66,19 @@ app.post('/events', (req, res)=>{
     res.send({}); // since the object has been updated in posts, we dont need to send back anything
 });
 
-app.listen(4002, ()=> {
+app.listen(4002, async()=> {
     console.log('Query service listening on 4002');
+    try {
+        /**
+         * Just concept, not really production scenario. when query service recover, it needs to fetch all events stored from event-buss
+         * and call helper above to process each event
+         */
+        const res = await axios.get("http://localhost:4005/events") // call to fetch all events stored in event-bus
+        for (let event of res.data){
+            console.log("Processing event:", event.type);
+            handleEventHelper(event.type, event.data);
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
 });
