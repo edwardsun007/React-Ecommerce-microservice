@@ -17,5 +17,5 @@ app.post('/events', (req, res)=>{
 })
 
 app.listen(4005, ()=>{
-    console.log('listening on 4005');
+    console.log('Event-Bus listening on 4005');
 });

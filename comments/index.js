@@ -58,5 +58,5 @@ app.post('/events',(req, res)=>{
 
 // each microservice need to use unique port
 app.listen(4001, ()=>{
-    console.log('Listening on port 4001...');
+    console.log('Comment service Listening on port 4001...');
 });
