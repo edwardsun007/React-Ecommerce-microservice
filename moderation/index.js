@@ -23,23 +23,22 @@ app.post('/events', async (req, res)=>{
     if (type === Types.CommentCreate) {
         // dummy logic on filtering xxx word as hentai
         const status = data.content.incudes('hentai') ? ModerationStatus.REJECTED: ModerationStatus.APPROVED;
-    }
-
-    try {
-        // now new comment has been moderated, time to emit new event to our event-bus
-        await axios.post('http://localhost:4005/events',{
-            type: ModerationStatus.MODERATED,
-            data:{
-                id: data.id,
-                postId: data.postId,
-                content: data.content,
-                status
-            }
-        });
-        res.send({}); // nothing to send back to caller
-    } catch (error) {
-        console.log('Error on emitting comment moderated event', error);
-    }
+        try {
+            // now new comment has been moderated, time to emit new event to our event-bus
+            await axios.post('http://localhost:4005/events',{
+                type: ModerationStatus.MODERATED,
+                data:{
+                    id: data.id,
+                    postId: data.postId,
+                    content: data.content,
+                    status
+                }
+            });
+            res.send({}); // nothing to send back to caller
+        } catch (error) {
+            console.log('Error on emitting comment moderated event', error);
+        }
+    }   
 });
 
 app.listen(4003, ()=>{
