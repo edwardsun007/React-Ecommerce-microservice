@@ -30,16 +30,20 @@ app.post('/posts', async (req, res) => {
         id,title
     };
     // emit event to event-bus
-    await axios.post('http://localhost:4005/events', {
-        type: Types.PostCreate,
-        data: {
-            id,
-            title
-        }
-    }) 
-
-    // express send back res with status code
-    res.status(201).send(posts[id])
+    try {
+        await axios.post('http://localhost:4005/events', {
+            type: Types.PostCreate,
+            data: {
+                id,
+                title
+            }
+        }) 
+    
+        // express send back res with status code
+        res.status(201).send(posts[id])
+    } catch (error) {
+        console.error('Error emitting event to event-bus:', error);
+    }
 });
 
 // postCreate event listener:
