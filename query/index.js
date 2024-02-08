@@ -43,8 +43,19 @@ app.post('/events', (req, res)=>{
     }
 
     if(type === EventTypes.CommentCreate){
+        console.log('query service received CommentCreate event, handling...')
         const {id, content, postId, status} = data; // now comment has status, make sure to pull it
         posts[postId].comments.push({id, content, status}); // store message with status
+    }
+
+    // watch for commentUpdated event
+    if(type === EventTypes.CommentUpdated){
+        console.log('Query service got CommentUpdated:', data); 
+        const {id, content, postId, status} = data;
+        const post = posts[postId];
+        const comment = post.comments.find(comment=>comment.id===id); // find the exact comment in the array
+        comment.status = status; // update its status
+        comment.content = content; // we cannot be sure if there are other changes happened to comment content, so just update it as well
     }
 
     console.log('query checking posts:')

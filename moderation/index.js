@@ -2,7 +2,7 @@
  * Comment moderation microservice
  * 
  */
-const {Types} = require('../utils/eventType'); // common JS syntax of importing module using require
+const {EventTypes} = require('../utils/eventType'); // common JS syntax of importing module using require
 const {ModerationStatus} = require('../utils/commentModerationType');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -20,12 +20,14 @@ then filter
 app.post('/events', async (req, res)=>{
     const { type, data } = req.body;
 
-    if (type === Types.CommentCreate) {
+    if (type === EventTypes.CommentCreate) {
+        console.log('Moderation Service received CommentCreate event...')
         // dummy logic on filtering xxx word as hentai
-        const status = data.content.incudes('hentai') ? ModerationStatus.REJECTED: ModerationStatus.APPROVED;
+        const status = data.content.includes('hentai') ? ModerationStatus.REJECTED: ModerationStatus.APPROVED;
+        console.log('Moderation Service check status:', status);
         try {
             // now new comment has been moderated, time to emit new event to our event-bus
-            await axios.post('http://localhost:4005/events',{
+            await axois.post('http://localhost:4005/events',{
                 type: ModerationStatus.MODERATED,
                 data:{
                     id: data.id,

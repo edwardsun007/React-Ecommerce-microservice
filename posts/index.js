@@ -23,7 +23,6 @@ app.get('/posts', (req, res) => {
 app.post('/posts', async (req, res) => {
     const id = randomBytes(4).toString('hex')
     console.log('check id=', id);
-
     const {title} = req.body;
 
     posts[id] = {
@@ -37,8 +36,7 @@ app.post('/posts', async (req, res) => {
                 id,
                 title
             }
-        }) 
-    
+        });
         // express send back res with status code
         res.status(201).send(posts[id])
     } catch (error) {

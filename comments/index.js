@@ -53,12 +53,11 @@ app.post('/posts/:id/comments', async (req, res)=>{
     } catch (error) {
         console.error(error.message);
     }
-
 });
 
 // CommentCreate event listener:
 /**
- * whenever event-bus send event over, this handler will be triggered
+ * whenever event-bus send event over, this handler will be triggered 
  */
 app.post('/events', async (req, res)=>{
     console.log('Received event:', req.body)
@@ -71,12 +70,14 @@ app.post('/events', async (req, res)=>{
         });
         comment.status = status; // update status
         // now we can tell event-bus that comment has been updated
-        await axios.post('http://localhost:4005',{
+        await axios.post('http://localhost:4005/events',{
             type: EventTypes.CommentUpdated,
-            id,
-            postId,
-            status,
-            content
+            data: {
+                id,
+                postId,
+                status,
+                content
+            }
         });
     }
 
