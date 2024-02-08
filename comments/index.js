@@ -2,6 +2,7 @@
 Comments microservice
 */
 const {Types} = require('../utils/eventType'); // common JS syntax of importing module using require
+const {ModerationStatus} = require('../utils/commentModerationType');
 const express = require('express');
 const bodyParser = require('body-parser');
 const  { randomBytes } = require('crypto');
@@ -28,23 +29,31 @@ app.post('/posts/:id/comments', async (req, res)=>{
 
     // check if there are existing comments
     const comments = commentsByPostId[req.params.id] || []// if undefined, then result to empty list using || here
+    // new comment by default assign status of pending since it is not filtered yet
     comments.push(
         {
             id: commentId,
-            content
+            content,
+            status: ModerationStatus.PENDING
         }
     );
     commentsByPostId[req.params.id]=comments;
     // emit event to event-bus
-    await axios.post('http://localhost:4005/events',{
-        type: Types.CommentCreate,
-        data: {
-            id: commentId,
-            content,
-            postId: req.params.id
-        }
-    })
-    res.status(201).send(comments);
+    try {
+        await axios.post('http://localhost:4005/events',{
+            type: Types.CommentCreate,
+            data: {
+                id: commentId,
+                content,
+                postId: req.params.id,
+                status: ModerationStatus.PENDING
+            }
+        })
+        res.status(201).send(comments);
+    } catch (error) {
+        console.error(error.message);
+    }
+
 });
 
 // CommentCreate event listener:

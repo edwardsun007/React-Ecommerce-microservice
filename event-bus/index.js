@@ -11,8 +11,8 @@ app.post('/events', (req, res)=>{
     axios.post('http://localhost:4000/events', event);  // Post service
     axios.post('http://localhost:4001/events', event);  // Comment service
     axios.post('http://localhost:4002/events', event);  // Query Service
+    axios.post('http://localhost:4003/events', event);  // Moderation Service
     // this code has flaw, currently it is just assuming all the above call can succeed
-
     res.send( {status: 'OK'});
 })
 

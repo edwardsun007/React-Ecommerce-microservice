@@ -43,8 +43,8 @@ app.post('/events', (req, res)=>{
     }
 
     if(type === Types.CommentCreate){
-        const {id, content, postId} = data;
-        posts[postId].comments.push({id, content});
+        const {id, content, postId, status} = data; // now comment has status, make sure to pull it
+        posts[postId].comments.push({id, content, status}); // store message with status
     }
 
     console.log('query checking posts:')
