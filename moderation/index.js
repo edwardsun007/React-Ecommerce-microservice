@@ -2,8 +2,8 @@
  * Comment moderation microservice
  * 
  */
-const {EventTypes} = require('../utils/eventType'); // common JS syntax of importing module using require
-const {ModerationStatus} = require('../utils/commentModerationType');
+const {EventTypes} = require('./Util'); // common JS syntax of importing module using require
+const {ModerationStatus} = require('./ModerationType');
 const express = require('express');
 const bodyParser = require('body-parser');
 const axois = require('axios');
