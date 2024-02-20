@@ -2,7 +2,7 @@
 Post microservice
 standard express app
 */
-const {EventTypes} = require('../utils/eventType'); // common JS syntax of importing module using require
+const {EventTypes} = require('./Util'); // common JS syntax of importing module using require
 const express = require('express');
 const bodyParser = require('body-parser');
 const  { randomBytes } = require('crypto');
