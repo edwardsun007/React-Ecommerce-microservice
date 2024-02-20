@@ -7,7 +7,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const axios = require('axios');
-const {EventTypes} = require('../utils/eventType'); // common JS syntax of importing module using require
+const {EventTypes} = require('./Util'); // common JS syntax of importing module using require
 
 const app = new express();
 app.use(bodyParser.json());
