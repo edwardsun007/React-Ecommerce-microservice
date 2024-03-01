@@ -11,7 +11,7 @@ spec:
     metadata:
       labels:
         app: posts
-      spec:
-        containers:
-          - name: posts
-            image: edward/posts:0.0.1
+    spec:
+      containers:
+        - name: posts
+          image: edward/posts:0.0.1
