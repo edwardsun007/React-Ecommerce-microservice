@@ -53,6 +53,7 @@ app.post('/events',(req, res)=>{
     res.send( {status: 'OK'})
 })
 
-app.listen(4000, ()=>{
+app.listen(4000, () => {
+    console.log('v60');
     console.log('Post service listening on port 4000...');
 })
