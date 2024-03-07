@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: posts-depl
+  name: event-bus-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: posts
+      app: event-bus
   template:
     metadata:
       labels: # identifier for pods being created
-        app: posts
+        app: event-bus
     spec:
       containers:
-        - name: posts
+        - name: event-bus
         # it is preferred that we don't manually apply version below as it will
         # introduce bug easily, without specifying version after image, it will always be the latest
-          image: edward/posts:postsvc # this matches with the tag when you run docker build -t 
+          image: edward/event-bus:eventbussvc
           # imagePullPolicy: Never
