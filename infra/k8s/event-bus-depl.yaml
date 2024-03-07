@@ -17,4 +17,18 @@ spec:
         # it is preferred that we don't manually apply version below as it will
         # introduce bug easily, without specifying version after image, it will always be the latest
           image: edward/event-bus:eventbussvc
-          # imagePullPolicy: Never
+          # imagePullPolicy: Never # this tells k8s it will never try pull image from docker hub will only use local image
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: event-bus-clusterip-srv
+spec:
+  selector:
+    app: event-bus # this service should look for app called event-bus defined above
+  type: ClusterIP
+  ports: 
+    - name: event-bus
+      protocol: TCP
+      port: 4005 # listen request that goes to port 4005
+      targetPort: 4005 # target port is same port defined in event-bus app code

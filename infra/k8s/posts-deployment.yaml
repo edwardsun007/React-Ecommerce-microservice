@@ -18,3 +18,17 @@ spec:
         # introduce bug easily, without specifying version after image, it will always be the latest
           image: edward/posts:postsvc # this matches with the tag when you run docker build -t 
           # imagePullPolicy: Never
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: posts-clusterip-srv
+spec:
+  selector:
+    app: posts # this service should look for app called posts service defined above
+  type: ClusterIP
+  ports: 
+    - name: posts
+      protocol: TCP
+      port: 4000 # listen request that goes to port 4000
+      targetPort: 4000 # target port is same port defined in posts service app code
