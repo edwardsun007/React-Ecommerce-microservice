@@ -31,7 +31,9 @@ app.post('/posts', async (req, res) => {
     };
     // emit event to event-bus
     try {
-        await axios.post('http://localhost:4005/events', {
+        await axios.post('http://event-bus-clusterip-srv:4005/events', { 
+            // after we created ClusterIP service for event-bus, need to wire it up with the clusterIp service name
+            // check the config in event-bus-depl.yaml
             type: EventTypes.PostCreate,
             data: {
                 id,
@@ -50,11 +52,11 @@ app.post('/posts', async (req, res) => {
  * whenever event-bus send event over, this handler will be triggered
  */
 app.post('/events',(req, res)=>{
-    console.log('Received event:', req.body)
+    console.log('Post MicroService Received Event from event-bus:', req.body)
     res.send( {status: 'OK'})
 })
 
 app.listen(4000, () => {
-    console.log('v60');
+    console.log('v68');
     console.log('Post service listening on port 4000...');
 })
