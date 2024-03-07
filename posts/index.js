@@ -20,6 +20,7 @@ app.get('/posts', (req, res) => {
     res.send(posts);
 });
 
+// Create POST API
 app.post('/posts', async (req, res) => {
     const id = randomBytes(4).toString('hex')
     console.log('check id=', id);
