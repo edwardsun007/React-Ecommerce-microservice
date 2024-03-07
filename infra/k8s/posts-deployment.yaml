@@ -9,7 +9,7 @@ spec:
       app: posts
   template:
     metadata:
-      labels:
+      labels: # identifier for pods being created
         app: posts
     spec:
       containers:
