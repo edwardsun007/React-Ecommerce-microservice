@@ -40,7 +40,7 @@ app.post('/posts/:id/comments', async (req, res)=>{
     commentsByPostId[req.params.id]=comments;
     // emit event to event-bus
     try {
-        await axios.post('http://localhost:4005/events',{
+        await axios.post('http://event-bus-clusterip-srv:4005/events',{
             type: EventTypes.CommentCreate,
             data: {
                 id: commentId,
@@ -70,7 +70,7 @@ app.post('/events', async (req, res)=>{
         });
         comment.status = status; // update status
         // now we can tell event-bus that comment has been updated
-        await axios.post('http://localhost:4005/events',{
+        await axios.post('http://event-bus-clusterip-srv:4005/events',{
             type: EventTypes.CommentUpdated,
             data: {
                 id,

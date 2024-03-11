@@ -27,7 +27,7 @@ app.post('/events', async (req, res)=>{
         console.log('Moderation Service check status:', status);
         try {
             // now new comment has been moderated, time to emit new event to our event-bus
-            await axois.post('http://localhost:4005/events',{
+            await axois.post('http://event-bus-clusterip-srv:4005/events',{
                 type: ModerationStatus.MODERATED,
                 data:{
                     id: data.id,

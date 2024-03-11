@@ -73,7 +73,7 @@ app.listen(4002, async()=> {
          * Just concept, not really production scenario. when query service recover, it needs to fetch all events stored from event-buss
          * and call helper above to process each event
          */
-        const res = await axios.get("http://localhost:4005/events") // call to fetch all events stored in event-bus
+        const res = await axios.get("http://event-bus-clusterip-srv:4005/events") // call to fetch all events stored in event-bus
         for (let event of res.data){
             console.log("Processing event:", event.type);
             handleEventHelper(event.type, event.data);
