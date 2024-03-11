@@ -44,5 +44,6 @@ app.post('/events', async (req, res)=>{
 });
 
 app.listen(4003, ()=>{
+    console.log("V68 Moderation svc");
     console.log('Moderation listening on 4003 ');
 });

@@ -86,5 +86,6 @@ app.post('/events', async (req, res)=>{
 
 // each microservice need to use unique port
 app.listen(4001, ()=>{
+    console.log("V68 comment svc");
     console.log('Comment service Listening on port 4001...');
 });

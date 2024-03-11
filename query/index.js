@@ -67,6 +67,7 @@ app.post('/events', (req, res)=>{
 });
 
 app.listen(4002, async()=> {
+    console.log("V68 Query svc");
     console.log('Query service listening on 4002');
     try {
         /**
