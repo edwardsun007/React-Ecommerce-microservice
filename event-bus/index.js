@@ -18,15 +18,15 @@ app.post('/events', (req, res)=>{
         // since we created ClusterIP service, we have to wire it up with the exact name used in posts-deployment.yaml
         console.log(err);
     });  // Post service
-    // axios.post('http://localhost:4001/events', event).catch((err)=>{
-    //     console.log(err);
-    // });  // Comment service
-    // axios.post('http://localhost:4002/events', event).catch((err)=>{
-    //     console.log(err);
-    // });  // Query Service
-    // axios.post('http://localhost:4003/events', event).catch((err)=>{
-    //     console.log(err);
-    // });  // Moderation Service
+    axios.post('http://comments-clusterip-srv:4001/events', event).catch((err)=>{
+        console.log(err);
+    });  // Comment service
+    axios.post('http://query-clusterip-srv:4002/events', event).catch((err)=>{
+        console.log(err);
+    });  // Query Service
+    axios.post('http://moderation-clusterip-srv:4003/events', event).catch((err)=>{
+        console.log(err);
+    });  // Moderation Service
     // this code has flaw, currently it is just assuming all the above call can succeed
     res.send( {status: 'OK'}); 
 })
