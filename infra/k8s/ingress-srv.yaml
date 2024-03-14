@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-srv
+  # the entire annotation sections is helping ingress to understand that
+  # we are feeding it some routing rules
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  # rules are the actual routing rules
+  ingressClassName: nginx
+  rules:
+  # In kubernetes, you can host multiple domains
+    - host: posts.com
+      http:
+        paths:
+          - path: /posts
+            pathType: Prefix
+            backend:
+              service:
+                name: posts-clusterip-srv
+                port:
+                  number: 4000
