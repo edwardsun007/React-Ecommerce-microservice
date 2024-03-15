@@ -12,7 +12,9 @@ function PostList() {
     const fetchPosts = async () => {
         try {
             // with intro of query service, frontend need to fetch the list using query service only
-            const response = await axios.get('http://localhost:4002/posts'); 
+            // After Ingress routing is setup, and our etc/hosts file also tweaked to include the domain
+            // we can directly ask React app to sent request to that domain
+            const response = await axios.get('http://myposts.com/posts'); 
             console.log(response.data);
             setPosts(response.data);
         }catch(error){

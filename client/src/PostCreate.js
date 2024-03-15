@@ -7,7 +7,9 @@ function PostCreate() {
     const onSubmitHandler = async (event) => {
         event.preventDefault();
         await axios.post(
-            'http://localhost:4000/posts', 
+            // After Ingress routing is setup, and our etc/hosts file also tweaked to include the domain
+            // we can directly ask React app to sent request to that domain
+            'http://myposts.com/posts', 
             {
               title: title
             });

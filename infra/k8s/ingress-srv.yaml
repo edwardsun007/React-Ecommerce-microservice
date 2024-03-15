@@ -11,7 +11,7 @@ spec:
   ingressClassName: nginx
   rules:
   # In kubernetes, you can host multiple domains
-    - host: posts.com
+    - host: myposts.com
       http:
         paths:
           - path: /posts
