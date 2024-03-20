@@ -11,6 +11,7 @@ spec:
   ingressClassName: nginx
   rules:
   # In kubernetes, you can host multiple domains
+  # myposts.com below will route request to the clusterIP service for posts microservice
     - host: myposts.com
       http:
         paths:
