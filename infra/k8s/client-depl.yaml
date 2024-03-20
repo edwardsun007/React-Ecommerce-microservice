@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client
+  template:
+    metadata:
+      labels: # identifier for pods being created
+        app: client
+    spec:
+      containers:
+        - name: client
+        # it is preferred that we don't manually apply version below as it will
+        # introduce bug easily, without specifying version after image, it will always be the latest
+          image: edwardsun518/udemy-microservice:client # this matches with the tag when you run docker build -t 
+          # imagePullPolicy: Never
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-clusterip-srv
+spec:
+  selector:
+    app: client # this service should look for app called client defined above, client is React app
+  type: ClusterIP
+  ports: 
+    - name: client
+      protocol: TCP
+      port: 3000 # listen request that goes to port 3000 - react port
+      targetPort: 3000 # target port is same port defined in client app code
