@@ -1,3 +1,7 @@
+# Note: v1beta is already deprecated, this config is following standard for v1 instead
+# serviceName and servicePort are no longer usable
+# pathType is required for each path
+#
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -6,6 +10,7 @@ metadata:
   # we are feeding it some routing rules
   annotations:
     kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: 'true'
 spec:
   # rules are the actual routing rules
   ingressClassName: nginx
@@ -20,7 +25,36 @@ spec:
           - path: /posts/create
             pathType: Prefix
             backend:
-              service:
+              service: 
                 name: posts-clusterip-srv
                 port:
                   number: 4000
+          # Query Service
+          - path: /posts
+            pathType: Prefix
+            backend:
+              service:
+                name: query-clusterip-srv
+                port:
+                  number: 4002
+          # Comment service
+          # ngix doesn't understand :id , so we need to use wild card regex
+          - path: /posts/?(.*)/comments
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: comments-clusterip-srv
+                port: 
+                  number: 4001
+          # React App
+          # usually react app using react router to create single page application, so you shoulduse path like this: /?(.*)
+          # here just for example we use /
+          # Note: / path need to be the last one, path order from the greatest importance down to the least importance
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: client-clusterip-srv
+                port:
+                  number: 3000
+          
