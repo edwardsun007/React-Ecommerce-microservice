@@ -12,6 +12,8 @@ spec:
   rules:
   # In kubernetes, you can host multiple domains
   # myposts.com below will route request to the clusterIP service for posts microservice
+  # Bad news: ingress controller cannot route request based on method like GET POST, it only matches the route, 
+  # so you cannot have POST /posts and GET /posts the same time
     - host: myposts.com
       http:
         paths:

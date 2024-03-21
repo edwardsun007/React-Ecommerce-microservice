@@ -9,7 +9,7 @@ function PostCreate() {
         await axios.post(
             // After Ingress routing is setup, and our etc/hosts file also tweaked to include the domain
             // we can directly ask React app to sent request to that domain
-            'http://myposts.com/posts', 
+            'http://myposts.com/posts/create', 
             {
               title: title
             });

@@ -21,7 +21,9 @@ app.get('/posts', (req, res) => {
 });
 
 // Create POST API
-app.post('/posts', async (req, res) => {
+// Differentiate the route by adding create suffix 
+// because ingress controller doesn't differentiate based on API method like POST or GET
+app.post('/posts/create', async (req, res) => {
     const id = randomBytes(4).toString('hex')
     console.log('check id=', id);
     const {title} = req.body;
